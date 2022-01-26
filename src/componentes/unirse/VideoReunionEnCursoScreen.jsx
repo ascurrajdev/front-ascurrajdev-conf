@@ -94,7 +94,7 @@ export const VideoReunionEnCursoScreen = () => {
 
     return (
         <div className="container">
-            <div className="row my-auto">
+            <div className="row my-auto justify-content-center align-items-center">
                 {
                     myMediaStream && <VideoReunion muted={true} peerMedia={myMediaStream}/>
                 }

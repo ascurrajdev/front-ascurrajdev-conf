@@ -12,9 +12,17 @@ export const UnirseReunionScreen = () => {
         loaded:false,
         ready:false
     })
+
     const [myMediaStream,setMyMediaStream] = useState(null)
     const {setUserMedia,acceptHost} = useContext(ReunionContext)
     const [permissionAudio,setPermissionAudio] = useState(false)
+
+    useEffect(() => {
+        return () => {
+
+        }
+    },[])
+
     useEffect(() => {
         navigator.mediaDevices.enumerateDevices().then((devicesInfo) => {
             let devicesConstraint = {
@@ -53,7 +61,7 @@ export const UnirseReunionScreen = () => {
         <div className="row container">
             <div className="col-lg-7">
                 <video ref={videoRef} autoPlay={true} muted={true} className="bg-black rounded w-100"></video>
-                <div className="d-flex justify-content-center">
+                <div className="d-flex gap-2 justify-content-center">
                 {devicesAvailable.loaded ? (
                     <>
                         <button className={'btn rounded-circle btn-lg ' + (devicesAvailable.video ? "btn-outline-dark" : "btn-danger") }>{ devicesAvailable.video ? <i className="zmdi zmdi-videocam"></i> : <i className="zmdi zmdi-videocam-off"></i>}</button>

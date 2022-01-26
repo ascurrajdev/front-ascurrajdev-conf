@@ -9,7 +9,6 @@ export const HomeScreen = () => {
                 </button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><NavLink className="dropdown-item" to="/reunion/nuevo">Iniciar una reunion ahora</NavLink></li>
-                    <li><a className="dropdown-item" href="#">Iniciar una reunion mas tarde</a></li>
                 </ul>
             </div>
             </div>
