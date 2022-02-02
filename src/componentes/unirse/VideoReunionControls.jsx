@@ -1,5 +1,6 @@
 import {useNavigate,useParams} from 'react-router-dom'
 import {useState,useEffect} from 'react'
+import api from '../../services/api'
 export default function VideoReunionControls({peer,mediaStream,setMediaStream,echo}){
     const {id:reunionId} = useParams()
     const navigate = useNavigate()
@@ -20,6 +21,7 @@ export default function VideoReunionControls({peer,mediaStream,setMediaStream,ec
         }
     },[outOfReunion])
     const disconnectOfVideoReunion = () => {
+        api.post('api/reuniones/desconectarse',{reunion_id:reunionId},{withCredentials:true})
         peer.disconnect()
         echo.leave(`reunion.${reunionId}`)
         setMediaStream((mediaStream) => {

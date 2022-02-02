@@ -1,9 +1,12 @@
 import {useEffect, useRef,useState,useContext} from 'react'
 import {Modal,ModalBody,ModalHeader} from 'reactstrap'
+import { useParams } from 'react-router'
 import {ReunionContext} from '../../reunionauth/reunionContext'
 import {Rings} from 'react-loader-spinner'
+import api from '../../services/api'
 export const UnirseReunionScreen = () => {
     const videoRef = useRef()
+    const {id:reunionId} = useParams()
     const [devicesAvailable,setDevicesAvailable] = useState({
         audio:false,
         video:false,
@@ -47,6 +50,7 @@ export const UnirseReunionScreen = () => {
     },[])
     
     const handleUnirseClick = () => {
+        api.post("api/reuniones/unirse",{reunion_id:reunionId},{withCredentials:true})
         setMyMediaStream(
             myMediaStream.getTracks().forEach((track) => track.stop())
         )

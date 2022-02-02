@@ -1,13 +1,15 @@
 import {useEffect,useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {Rings} from 'react-loader-spinner'
-import restReunionesList from "../../services/restReunionesList"
+import api from "../../services/api"
 export const ReunionListScreen = () => {
     const [reuniones,setReuniones] = useState([])
     const [isLoading,setIsLoading] = useState(true)
     const navigate = useNavigate()
     useEffect(() => {
-        restReunionesList().then((reuniones) => {
+        api.get("api/reuniones/unirse",{withCredentials:true}).then((response) => {
+            return response.data.data
+        }).then((reuniones) => {
             setIsLoading(isLoading => !isLoading)
             setReuniones(reuniones)
         })
@@ -26,8 +28,8 @@ export const ReunionListScreen = () => {
                     reuniones.length > 0 ? (
                         <ul className="list-group">
                             {
-                                reuniones.map(({id}) => (
-                                    <li className="list-group-item" key={id}><h4 className="badge bg-light text-dark py-2">{id}</h4> <button className="btn btn-primary" onClick={() => unirseReunionRedirect(id)}>Unirse</button></li>
+                                reuniones.map(({reunion_id}) => (
+                                    <li className="list-group-item" key={reunion_id}><h4 className="badge bg-light text-dark py-2">{reunion_id}</h4> <button className="btn btn-primary" onClick={() => unirseReunionRedirect(reunion_id)}>Volver a unirse</button></li>
                                 ))
                             }
                         </ul>

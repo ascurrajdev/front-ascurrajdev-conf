@@ -1,5 +1,5 @@
 import Peer from "peerjs"
-import { useEffect,useContext,useRef,useState } from "react"
+import { useEffect,useContext,useState } from "react"
 import Echo from 'laravel-echo'
 import Pusher from 'pusher-js'
 import { AuthContext } from "../../auth/authContext"
@@ -53,32 +53,32 @@ export const VideoReunionEnCursoScreen = () => {
                 peer.on('call',(call) => {
                     call.answer(stream)
                     call.on('stream',(remoteStream) => {
-                        setPeerMediaStremConnected([
-                            ...peersMediaStreamConnected,
+                        setPeerMediaStremConnected((peers) => ([
+                            ...peers,
                             {
                                 user:call.metadata,
                                 mediaStream:remoteStream
                             }
-                        ])
+                        ]))
                     })
                 })
                 echo.join(`reunion.${reunionId}`)
                 .joining((user) => {
                     const call = peer.call(user.id,stream,{metadata: authValue.user})
                     call.on('stream', (remoteStream) => {
-                        setPeerMediaStremConnected([
-                            ...peersMediaStreamConnected,
+                        setPeerMediaStremConnected((peers) => ([
+                            ...peers,
                             {
                                 user,
                                 mediaStream:remoteStream
                             },
-                        ])
+                        ]))
                     });
                 })
                 .leaving((user) => {
                     setPeerMediaStremConnected((peersMedia) =>{
                         return peersMedia.filter((peerMedia) => {
-                            return peerMedia.user.id != user.id
+                            return peerMedia.user.id !== user.id
                         })
                     })
                 })
