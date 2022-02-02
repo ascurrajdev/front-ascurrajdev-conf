@@ -25,7 +25,8 @@ export const ConfApp = () => {
         const response = await api.get('api/user',{withCredentials:true})
         dispatch({type:'login',payload:response.data})
     }
-    const logout = () => {
+    const logout = async () => {
+        await api.post('logout',{},{withCredentials:true})
         dispatch({type:'logout'})
     }
     return(

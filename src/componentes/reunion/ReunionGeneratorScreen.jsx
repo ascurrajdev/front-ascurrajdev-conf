@@ -13,7 +13,7 @@ export const ReunionGeneratorScreen = () => {
     useEffect(() => {
         (async () => {
             setReunion(await restReunioneGenerate())
-            setShow(!show)
+            setShow(p => !p)
         })()
     },[])    
     return(

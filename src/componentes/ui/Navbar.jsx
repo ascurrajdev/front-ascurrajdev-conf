@@ -1,5 +1,8 @@
+import { useContext } from 'react'
 import {NavLink} from 'react-router-dom'
+import {AuthContext} from '../../auth/authContext'
 export const Navbar = () => {
+    const {logout} = useContext(AuthContext)
     return(
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
@@ -7,7 +10,7 @@ export const Navbar = () => {
                 <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a className="navbar-brand" href="#">@ascurrajdev-conf</a>
+                <p className="navbar-brand">@ascurrajdev-conf</p>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item">
                     <NavLink className={({isActive}) => "nav-link " + (isActive ? "active" : "")} to="/">Inicio</NavLink>
@@ -15,6 +18,9 @@ export const Navbar = () => {
                     <li className="nav-item">
                     <NavLink className={({isActive}) => "nav-link " + (isActive ? "active" : "")} to="/reunion">Reuniones</NavLink>
                     </li>
+                </ul>
+                <ul className="d-flex">
+                    <button onClick={logout} className="btn btn-primary">Cerrar Sesion</button>
                 </ul>
                 </div>
             </div>

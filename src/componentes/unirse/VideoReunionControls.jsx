@@ -4,6 +4,7 @@ export default function VideoReunionControls({peer,mediaStream,setMediaStream,ec
     const {id:reunionId} = useParams()
     const navigate = useNavigate()
     const [mediaConstraints,setMediaConstraints] = useState({audio:false,video:false})
+    const [outOfReunion,setOutOfReunion] = useState(false)
     const {audio,video} = mediaConstraints
     useEffect(() => {
         if(mediaStream !== null){
@@ -13,6 +14,11 @@ export default function VideoReunionControls({peer,mediaStream,setMediaStream,ec
             })
         }
     },[mediaStream])
+    useEffect(() => {
+        if(outOfReunion){
+            navigate("/")
+        }
+    },[outOfReunion])
     const disconnectOfVideoReunion = () => {
         peer.disconnect()
         echo.leave(`reunion.${reunionId}`)
@@ -20,10 +26,7 @@ export default function VideoReunionControls({peer,mediaStream,setMediaStream,ec
             mediaStream.getTracks().forEach((track) => track.stop())
             return mediaStream
         })
-        mediaStream.addEventListener("inactive",() => {
-            navigate("/")
-        })
-
+        setOutOfReunion(true)
     }
     const changeStateAudio = () => {
         if(mediaStream.getAudioTracks().length > 0){

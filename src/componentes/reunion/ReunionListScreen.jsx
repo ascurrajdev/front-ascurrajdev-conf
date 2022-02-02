@@ -8,7 +8,7 @@ export const ReunionListScreen = () => {
     const navigate = useNavigate()
     useEffect(() => {
         restReunionesList().then((reuniones) => {
-            setIsLoading(!isLoading)
+            setIsLoading(isLoading => !isLoading)
             setReuniones(reuniones)
         })
     },[])    
@@ -23,13 +23,17 @@ export const ReunionListScreen = () => {
                     <Rings wrapperClass="justify-content-center my-5" color="#047BC4" radius={15} width={150} height={150}/>
                 )
                 :(
-                    <ul className="list-group">
-                        {
-                            reuniones.map(({id}) => (
-                                <li className="list-group-item" key={id}><h4 className="badge bg-light text-dark py-2">{id}</h4> <button className="btn btn-primary" onClick={() => unirseReunionRedirect(id)}>Unirse</button></li>
-                            ))
-                        }
-                    </ul>
+                    reuniones.length > 0 ? (
+                        <ul className="list-group">
+                            {
+                                reuniones.map(({id}) => (
+                                    <li className="list-group-item" key={id}><h4 className="badge bg-light text-dark py-2">{id}</h4> <button className="btn btn-primary" onClick={() => unirseReunionRedirect(id)}>Unirse</button></li>
+                                ))
+                            }
+                        </ul>
+                    ):(
+                        <h1 className="text-center mt-5">No tienes reuniones generadas</h1>
+                    )
                 )
             }
         </div>

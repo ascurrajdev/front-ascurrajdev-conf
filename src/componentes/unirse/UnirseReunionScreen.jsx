@@ -2,9 +2,7 @@ import {useEffect, useRef,useState,useContext} from 'react'
 import {Modal,ModalBody,ModalHeader} from 'reactstrap'
 import {ReunionContext} from '../../reunionauth/reunionContext'
 import {Rings} from 'react-loader-spinner'
-import { useNavigate } from 'react-router-dom'
 export const UnirseReunionScreen = () => {
-    const navigate = useNavigate()
     const videoRef = useRef()
     const [devicesAvailable,setDevicesAvailable] = useState({
         audio:false,
@@ -14,23 +12,21 @@ export const UnirseReunionScreen = () => {
     })
 
     const [myMediaStream,setMyMediaStream] = useState(null)
+    const [accept,setAccept] = useState(false)
     const {setUserMedia,acceptHost} = useContext(ReunionContext)
     const [permissionAudio,setPermissionAudio] = useState(false)
 
     useEffect(() => {
-        return () => {
-
+        if(accept){
+            acceptHost()
         }
-    },[])
+    },[accept])
 
     useEffect(() => {
         navigator.mediaDevices.enumerateDevices().then((devicesInfo) => {
             let devicesConstraint = {
                 audio: devicesInfo.some((dev) => dev.kind === 'audioinput'),
                 video: devicesInfo.some((dev) => dev.kind === 'videoinput'),
-            }
-            if(devicesConstraint.audio){
-                navigator.permissions.query({name:"microphone"}).then((res) => setPermissionAudio(res.state !== 'granted'))
             }
             setUserMedia(devicesConstraint)
             setDevicesAvailable({
@@ -51,11 +47,10 @@ export const UnirseReunionScreen = () => {
     },[])
     
     const handleUnirseClick = () => {
-        setMyMediaStream((mediaStream) => {
-            mediaStream.getTracks().forEach((track) => track.stop())
-            return mediaStream
-        })
-        myMediaStream.addEventListener('inactive',() => acceptHost())
+        setMyMediaStream(
+            myMediaStream.getTracks().forEach((track) => track.stop())
+        )
+        setAccept(true)
     }
     return (
         <div className="row container">
