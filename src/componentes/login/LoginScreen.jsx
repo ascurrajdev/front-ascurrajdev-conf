@@ -17,8 +17,9 @@ export const LoginScreen = () => {
         setLoading(loading => !loading)
         api.get("sanctum/csrf-cookie",{withCredentials:true}).then(() => {
             api.post("login",form,{withCredentials:true}).then((response) => {
-                login()
-                navigate("/",{replace:true})
+                login().then(() => {
+                    navigate("/",{replace:true})
+                })
             }).catch(({response}) => {
                 setLoading(loading => !loading)
                 if(response.data.errors){
