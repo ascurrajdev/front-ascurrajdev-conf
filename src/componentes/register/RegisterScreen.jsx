@@ -34,7 +34,7 @@ export const RegisterScreen = () => {
     }
     return(
         <div className="container-fluid bg-light vh-100 d-flex justify-content-center align-items-center">
-            <div className="card w-50">
+            <div className="card col-lg-6">
                 <form onSubmit={submitRegister}>
                     <div className="card-body d-grid">
                         <div className="form-group">

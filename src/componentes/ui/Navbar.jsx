@@ -20,7 +20,7 @@ export const Navbar = () => {
                     </li>
                 </ul>
                 <ul className="d-flex">
-                    <button onClick={logout} className="btn btn-primary">Cerrar Sesion</button>
+                    <button onClick={logout} className="btn btn-outline-dark">Cerrar Sesion <i className="zmdi zmdi-power"></i></button>
                 </ul>
                 </div>
             </div>

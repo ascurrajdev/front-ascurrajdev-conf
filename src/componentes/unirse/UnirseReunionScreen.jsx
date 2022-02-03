@@ -1,12 +1,13 @@
 import {useEffect, useRef,useState,useContext} from 'react'
 import {Modal,ModalBody,ModalHeader} from 'reactstrap'
-import { useParams } from 'react-router'
+import { useParams,useNavigate } from 'react-router'
 import {ReunionContext} from '../../reunionauth/reunionContext'
 import {Rings} from 'react-loader-spinner'
 import api from '../../services/api'
 export const UnirseReunionScreen = () => {
     const videoRef = useRef()
     const {id:reunionId} = useParams()
+    const navigate = useNavigate()
     const [devicesAvailable,setDevicesAvailable] = useState({
         audio:false,
         video:false,
@@ -16,6 +17,7 @@ export const UnirseReunionScreen = () => {
 
     const [myMediaStream,setMyMediaStream] = useState(null)
     const [accept,setAccept] = useState(false)
+    const [back,setBack] = useState(false)
     const {setUserMedia,acceptHost} = useContext(ReunionContext)
     const [permissionAudio,setPermissionAudio] = useState(false)
 
@@ -48,6 +50,12 @@ export const UnirseReunionScreen = () => {
             console.log(e)
         })
     },[])
+
+    useEffect(() => {
+        if(back){
+            navigate(-1)
+        }
+    },[back])
     
     const handleUnirseClick = () => {
         api.post("api/reuniones/unirse",{reunion_id:reunionId},{withCredentials:true})
@@ -55,6 +63,12 @@ export const UnirseReunionScreen = () => {
             myMediaStream.getTracks().forEach((track) => track.stop())
         )
         setAccept(true)
+    }
+    const handleVolverAtras = () => {
+        setMyMediaStream(
+            myMediaStream.getTracks().forEach((track) => track.stop())
+        )
+        setBack(true)
     }
     return (
         <div className="row container">
@@ -65,7 +79,8 @@ export const UnirseReunionScreen = () => {
                     <>
                         <button className={'btn rounded-circle btn-lg ' + (devicesAvailable.video ? "btn-outline-dark" : "btn-danger") }>{ devicesAvailable.video ? <i className="zmdi zmdi-videocam"></i> : <i className="zmdi zmdi-videocam-off"></i>}</button>
                         <button className={'btn rounded-circle btn-lg ' + (devicesAvailable.audio ? "btn-outline-dark" : "btn-danger") }><i className="zmdi zmdi-mic-outline"></i></button>
-                        <button onClick={handleUnirseClick} className="btn btn-primary" disabled={!devicesAvailable.ready}>Unirse</button>
+                        <button onClick={handleUnirseClick} className="btn btn-outline-primary" disabled={!devicesAvailable.ready}>Unirse <i class="zmdi zmdi-arrow-right-top"></i></button>
+                        <button onClick={handleVolverAtras} className="btn btn-outline-secondary">Volver <i class="zmdi zmdi-undo"></i></button>
                     </>
                 ) : (
                     <Rings color="#047BC4" radius={15} width={100} height={100}/>
