@@ -22,10 +22,10 @@ export const VideoReunionEnCursoScreen = () => {
         setPeer(new Peer(authValue.user.id))
         setEcho(new Echo({
             broadcaster: 'pusher',
-            key: 'eaec0efbd968f46ba3f8',
-            wsHost:'localhost',
-            cluster:'us2',
-            wsPort: 6001,
+            key: process.env.REACT_APP_WS_KEY,
+            wsHost: process.env.REACT_APP_WS_HOST,
+            cluster: process.env.REACT_APP_WS_CLUSTER,
+            wsPort: process.env.REACT_APP_WS_PORT,
             forceTLS: false,
             disableStats: true,
             authorizer: (channel, options) => {
