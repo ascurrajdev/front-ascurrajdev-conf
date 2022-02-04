@@ -73,7 +73,7 @@ export const UnirseReunionScreen = () => {
     return (
         <div className="row container">
             <div className="col-lg-7">
-                <video ref={videoRef} autoPlay={true} muted={true} className="bg-black rounded w-100"></video>
+                <video ref={videoRef} controls={false} autoPlay={true} muted={true} className="bg-black rounded w-100"></video>
                 <div className="d-flex gap-2 justify-content-center">
                 {devicesAvailable.loaded ? (
                     <>
