@@ -17,7 +17,7 @@ export default function VideoReunionControls({peer,mediaStream,setMediaStream,ec
     },[mediaStream])
     useEffect(() => {
         if(outOfReunion){
-            navigate("/")
+            navigate("/reunion/desconectado")
         }
     },[outOfReunion])
     const disconnectOfVideoReunion = () => {

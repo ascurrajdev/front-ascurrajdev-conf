@@ -79,8 +79,8 @@ export const UnirseReunionScreen = () => {
                     <>
                         <button className={'btn rounded-circle btn-lg ' + (devicesAvailable.video ? "btn-outline-dark" : "btn-danger") }>{ devicesAvailable.video ? <i className="zmdi zmdi-videocam"></i> : <i className="zmdi zmdi-videocam-off"></i>}</button>
                         <button className={'btn rounded-circle btn-lg ' + (devicesAvailable.audio ? "btn-outline-dark" : "btn-danger") }><i className="zmdi zmdi-mic-outline"></i></button>
-                        <button onClick={handleUnirseClick} className="btn btn-outline-primary" disabled={!devicesAvailable.ready}>Unirse <i class="zmdi zmdi-arrow-right-top"></i></button>
-                        <button onClick={handleVolverAtras} className="btn btn-outline-secondary">Volver <i class="zmdi zmdi-undo"></i></button>
+                        <button onClick={handleUnirseClick} className="btn btn-outline-primary" disabled={!devicesAvailable.ready}>Unirse <i className="zmdi zmdi-arrow-right-top"></i></button>
+                        <button onClick={handleVolverAtras} className="btn btn-outline-secondary">Volver <i className="zmdi zmdi-undo"></i></button>
                     </>
                 ) : (
                     <Rings color="#047BC4" radius={15} width={100} height={100}/>
