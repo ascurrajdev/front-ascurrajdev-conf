@@ -26,8 +26,8 @@ export const VideoReunionEnCursoScreen = () => {
             wsHost: process.env.REACT_APP_WS_HOST,
             cluster: process.env.REACT_APP_WS_CLUSTER,
             wsPort: process.env.REACT_APP_WS_PORT,
-            forceTLS: true,
-            encrypted:process.env.REACT_APP_WS_ENCRYPTED,
+            forceTLS: false,
+            encrypted: process.env.REACT_APP_WS_ENCRYPTED,
             disableStats: true,
             authorizer: (channel, options) => {
                 return {
