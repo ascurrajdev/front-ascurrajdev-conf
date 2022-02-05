@@ -19,7 +19,7 @@ export const UnirseReunionScreen = () => {
     const [accept,setAccept] = useState(false)
     const [back,setBack] = useState(false)
     const {setUserMedia,acceptHost} = useContext(ReunionContext)
-    const [permissionAudio,setPermissionAudio] = useState(false)
+    const [errorPermission,setErrorPermission] = useState(false)
 
     useEffect(() => {
         if(accept){
@@ -44,7 +44,7 @@ export const UnirseReunionScreen = () => {
                 setDevicesAvailable((state) => ({...state,ready:true}))
                 videoRef.current.srcObject = stream
             }).catch((e) => {
-                console.log(e)
+                setErrorPermission(true)
             })
         }).catch((e) => {
             console.log(e)
@@ -65,9 +65,11 @@ export const UnirseReunionScreen = () => {
         setAccept(true)
     }
     const handleVolverAtras = () => {
-        setMyMediaStream(
-            myMediaStream.getTracks().forEach((track) => track.stop())
-        )
+        if(myMediaStream){
+            setMyMediaStream(
+                myMediaStream.getTracks().forEach((track) => track.stop())
+            )
+        }
         setBack(true)
     }
     return (
@@ -87,14 +89,14 @@ export const UnirseReunionScreen = () => {
                     )}
                 </div>
                 <Modal
-                    isOpen={permissionAudio}    
-                    toggle={() => setPermissionAudio(!permissionAudio)}
+                    isOpen={errorPermission}    
+                    toggle={() => setErrorPermission(!errorPermission)}
                     >
-                    <ModalHeader toggle={() => setPermissionAudio(!permissionAudio)}>
-                        Permiso denegado
+                    <ModalHeader>
+                        Permiso denegado <span className="badge bg-danger">Error!</span>
                     </ModalHeader>
                     <ModalBody>
-                        Tienes que activar el acceso al microfono para poder unirse a la reunion
+                        Tienes que activar el acceso al microfono para poder unirte a la reunion, por el momento no te podras conectar a la reunion
                     </ModalBody>
                 </Modal>
             </div>
