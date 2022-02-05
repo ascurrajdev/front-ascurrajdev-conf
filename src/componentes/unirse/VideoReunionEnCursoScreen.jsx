@@ -53,26 +53,26 @@ export const VideoReunionEnCursoScreen = () => {
                 peer.on('call',(call) => {
                     call.answer(stream)
                     call.on('stream',(remoteStream) => {
-                        setPeerMediaStremConnected((peers) => ([
-                            ...peers,
+                        setPeerMediaStremConnected([
+                            ...peersMediaStreamConnected,
                             {
                                 user:call.metadata,
                                 mediaStream:remoteStream
                             }
-                        ]))
+                        ])
                     })
                 })
                 echo.join(`reunion.${reunionId}`)
                 .joining((user) => {
                     const call = peer.call(user.id,stream,{metadata: authValue.user})
                     call.on('stream', (remoteStream) => {
-                        setPeerMediaStremConnected((peers) => ([
-                            ...peers,
+                        setPeerMediaStremConnected([
+                            ...peersMediaStreamConnected,
                             {
                                 user,
                                 mediaStream:remoteStream
                             },
-                        ]))
+                        ])
                     });
                 })
                 .leaving((user) => {
